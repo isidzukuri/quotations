@@ -5,11 +5,16 @@ html
       | Quotations
     = csrf_meta_tags
     = csp_meta_tag
-    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
+
   body
-    p.notice
-      =flash[:notice]
-    p.alert
-      =flash[:alert]
-    = yield
+    div class='container'
+      - flash.each do |key, value|
+        div class="#{flash_class(key)}" role='alert'
+          = value
+          button.close aria-label="Close" data-dismiss="alert" type="button" 
+            span aria-hidden="true"  ×
+
+
+      = yield
