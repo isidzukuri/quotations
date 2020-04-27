@@ -1,0 +1,71 @@
+users
+- first_name
+- last_name
+- nick
+- created_at
+- updated_at
+
+user_credentials (device)
+- email
+- created_at
+- updated_at
+
+authors
+- full_name
+
+books
+- title
+
+quotations
+- book_id, :integer
+- language, :string
+- page, :integer
+- percent, :integer
+- text, :string
+- url, :string
+- user_id, :integer
+- has_one :scan
+- has_many :authors
+
+scans
+  defenum(StatusEnum, initialized: 0, processing: 1, scanned: 2, error: 3)
+
+- image, MemoryExtender.Image.Type
+- log, :string
+- owner_id, :integer
+- status, StatusEnum
+- text, :string
+- uuid, :string
+
+comments
+likes
+     
+--------------------------------
+
+BaseController
+  def current_user
+    current_user_credential&.user
+  end
+
+
+GoogleVisionClient
+
+OCR
+
+WebSockets
+# write later elixir service 
+
+NotifyUserAfterOcr
+
+--------------------------------
+
+amazon s3
+amazon cdn
+amazon server
+bootstrap
+elastic
+
+-------------------------------
+remember previous quotation attributes
+sharing
+export
