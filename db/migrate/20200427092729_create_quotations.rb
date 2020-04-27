@@ -5,7 +5,7 @@ class CreateQuotations < ActiveRecord::Migration[6.0]
       t.integer :page, null: true
       t.integer :percent, null: true
       t.string :url, null: true
-      t.integer :user_id
+      t.integer :user_id, null: true
       t.text :text, null: true
       t.timestamps null: false
     end
