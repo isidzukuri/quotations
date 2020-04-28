@@ -3,4 +3,7 @@ Rails.application.routes.draw do
 
   root to: 'home#index'
   devise_for :credentials, controllers: { registrations: 'credentials/registrations' }
+
+  resources :quotations
+  resources :scans
 end

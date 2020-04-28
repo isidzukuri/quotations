@@ -1,0 +1,6 @@
+<h2>Scans index</h2>
+
+- @scans.each do |scan|
+  div 
+    = image_tag(scan.image.url(:thumb).to_s)
+    = link_to scan.image.url(:thumb), scan

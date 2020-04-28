@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_27_101437) do
+ActiveRecord::Schema.define(version: 2020_04_28_075933) do
 
   create_table "credentials", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(version: 2020_04_27_101437) do
     t.string "log"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "image"
     t.index ["quotation_id"], name: "index_scans_on_quotation_id"
   end
 

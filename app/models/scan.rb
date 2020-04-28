@@ -10,5 +10,8 @@ class Scan < ApplicationRecord
 
   validates :text, length: { maximum: 10000 }, allow_blank: true
   validates :language, length: { is: 2 }, allow_blank: true
-  validates :language, format: { with: /\A[a-z]+\z/ }, allow_blank: true  
+  validates :language, format: { with: /\A[a-z]+\z/ }, allow_blank: true
+
+  # has_one_attached :image
+  mount_uploader :image, ImageUploader
 end
