@@ -5,5 +5,5 @@ Rails.application.routes.draw do
   devise_for :credentials, controllers: { registrations: 'credentials/registrations' }
 
   resources :quotations
-  resources :scans
+  resources :scans, except: [:update, :edit]
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe 'Post' do           #
   context 'before publication' do  # (almost) plain English
     it 'cannot have comments' do   #

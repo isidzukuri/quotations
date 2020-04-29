@@ -12,10 +12,10 @@ class ScansController < ApplicationController
     @scan = Scan.new(scans_params)
 
     if @scan.save
-      flash[:success] = 'Scan has been created'
+      flash[:success] = I18n.t('scan.created_successfully')
       redirect_to scans_path
     else
-      flash[:danger] = 'Something went wrong'
+      flash[:danger] = I18n.t(:smtng_went_wrong)
       render :new
     end
   end
@@ -24,14 +24,17 @@ class ScansController < ApplicationController
     @scan = Scan.find(params[:id])
   end
 
-  # def edit
-  # end
-
-  # def update
-  # end
-
-  # def destroy
-  # end
+  def destroy
+    @scan = Scan.find(params[:id])
+    
+    if @scan.destroy
+      flash[:success] = I18n.t('scan.deleted_successfully')
+      redirect_to scans_path
+    else
+      flash[:danger] = I18n.t(:smtng_went_wrong)
+      render :show
+    end
+  end
 
   private
 

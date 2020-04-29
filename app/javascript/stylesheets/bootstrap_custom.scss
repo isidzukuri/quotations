@@ -36,3 +36,7 @@
 @import '~bootstrap/scss/_tooltip.scss';
 @import '~bootstrap/scss/_transitions.scss';
 @import '~bootstrap/scss/_utilities.scss';
+
+.alert-error {
+  @extend .alert-danger;
+}

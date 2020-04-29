@@ -31,3 +31,9 @@
 
 en:
   hello: "Hello world"
+  smtng_went_wrong: 'Something went wrong'
+  delete: 'Delete'
+  are_you_sure: "Are you sure ?"
+  scan:
+    created_successfully: 'Scan has been created'
+    deleted_successfully: 'Scan has been deleted'

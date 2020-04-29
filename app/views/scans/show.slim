@@ -1,3 +1,8 @@
 h3 = @scan.image_url
 
 = image_tag(@scan.image_url.to_s)
+
+br
+br
+= link_to I18n.t(:delete), @scan, method: :delete, confirm: I18n.t(:are_you_sure)
+

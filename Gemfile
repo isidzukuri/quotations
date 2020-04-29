@@ -50,6 +50,7 @@ group :test do
   gem 'factory_bot'
   gem 'ffaker'
   gem 'vcr'
+  gem 'rails-controller-testing'
   gem 'rspec-rails'
   gem 'selenium-webdriver'
   gem 'webdrivers'
