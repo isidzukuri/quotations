@@ -14,6 +14,8 @@ class ScansController < ApplicationController
     @scan = Scan.new(scans_params)
 
     if @scan.save
+      Scans::Ocr.new.call(@scan)
+
       flash[:success] = I18n.t('scan.created_successfully')
       redirect_to scans_path
     else

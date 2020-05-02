@@ -16,7 +16,8 @@ module Scans
 
       if response.code.to_i == 200
         {
-          text: data['responses'][0]['fullTextAnnotation']['text']
+          text: data['responses'][0]['fullTextAnnotation']['text'],
+          log: response.body
         }
       else
         raise Error, "[#{response.code}] #{data}"

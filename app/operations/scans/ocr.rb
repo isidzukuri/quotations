@@ -1,32 +1,39 @@
 # frozen_string_literal: true
+module Scans
+  class Ocr
+    def call(scan)
+      @scan = scan
+      
+      set_processing_status
 
-class Scan::Ocr < BaseOperation
-  step :image_to_base64
-  step :recognize_text
-  step :save_data
+      begin
+        scan.text = scanning_result[:text]
+        scan.log = scanning_result[:log]
+        scan.status = Scan.statuses[:scanned]
+        scan.save
+      rescue => exception
+        scan.status = Scan.statuses[:error]
+        scan.log = exception.message
+        scan.save
 
-  def find_image
-    scan = Scan.find_by_id(params[:id])
+        raise exception
+      end
+    end
 
-    error!(:scan, t('errors.not_found')) unless scan
+    private
 
-    image_base64 = Base64.strict_encode64(scan.image_url)
-    update_context(:image_base64, image_base64)
-    update_context(:scan, scan)
-  end
+    attr_reader :scan
 
-  def recognize_text
-    response = VisionClient.call(image_base64: context[:image_base64])
+    def image_base64
+      Base64.strict_encode64(scan.image.read)
+    end
 
-    update_context(:data, response)
-  end
+    def set_processing_status
+      scan.update_attribute(:status, Scan.statuses[:processing])
+    end
 
-  def save_data
-    # :status => "initialized",
-    # :quotation_id => nil,
-    #     :language => nil,
-    #         :text => nil,
-    #          :log => nil,
-    context[:scan]
+    def scanning_result
+      @scanning_result ||= VisionClient.new.call(image_base64)
+    end
   end
 end

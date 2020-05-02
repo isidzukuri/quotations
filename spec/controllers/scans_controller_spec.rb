@@ -33,14 +33,28 @@ RSpec.describe ScansController, type: :controller do
   end
 
   describe 'POST #create' do
+    let(:api_key) { 'google_vision_api_key' }
+    let(:request_url) { "https://vision.googleapis.com/v1/images:annotate?key=#{api_key}" }
+    let(:vcr_cassette) { :google_vision_success }
     let(:file_path) { Rails.root.join('spec', 'fixtures', 'quote.jpeg') }
     let(:image) { Rack::Test::UploadedFile.new file_path, 'image/jpeg' }
+    let(:text) { "\"If it still in your mind,\nit is worth\ntaking the risk.\"\n" }
     let(:params) do
       { scan: { image: image } }
     end
 
-    subject { post(:create, params: params) }
+    before do
+      allow_any_instance_of(Scans::VisionClient).to receive(:request_url).and_return(request_url)
+    end
+
+    subject do
+      VCR.use_cassette(vcr_cassette) do
+        post(:create, params: params)
+      end
+    end
 
     it { expect { subject }.to change { Scan.count }.by(1) }
+    it { subject; expect(assigns(:scan).status).to eq('scanned') }
+    it { subject; expect(assigns(:scan).text).to eq(text) }
   end
 end
