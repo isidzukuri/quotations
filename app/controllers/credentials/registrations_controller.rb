@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Credentials
   class RegistrationsController < Devise::RegistrationsController
     def create

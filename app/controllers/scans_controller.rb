@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ScansController < ApplicationController
   def index
     @scans = Scan.all
@@ -26,7 +28,7 @@ class ScansController < ApplicationController
 
   def destroy
     @scan = Scan.find(params[:id])
-    
+
     if @scan.destroy
       flash[:success] = I18n.t('scan.deleted_successfully')
       redirect_to scans_path

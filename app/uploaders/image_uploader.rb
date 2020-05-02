@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ImageUploader < CarrierWave::Uploader::Base
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
@@ -14,17 +16,17 @@ class ImageUploader < CarrierWave::Uploader::Base
   end
 
   def extension_whitelist
-    %w(jpg jpeg gif png)
+    %w[jpg jpeg gif png]
   end
 
   def content_type_whitelist
-    /image\//
+    %r{image/}
   end
 
   process resize_to_fit: [2000, 2000]
 
   version :thumb do
-    process resize_to_fit: [100,100]
+    process resize_to_fit: [100, 100]
   end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:

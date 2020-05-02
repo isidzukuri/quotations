@@ -1,7 +1,7 @@
-class QuotationsController < ApplicationController
+# frozen_string_literal: true
 
-  def index
-  end
+class QuotationsController < ApplicationController
+  def index; end
 
   # def new
   #   @scan = Scan.new

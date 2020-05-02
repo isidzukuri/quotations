@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Scan < ApplicationRecord
   enum status: {
     initialized: 0,
@@ -8,7 +10,7 @@ class Scan < ApplicationRecord
 
   belongs_to :quotation, optional: true
 
-  validates :text, length: { maximum: 10000 }, allow_blank: true
+  validates :text, length: { maximum: 10_000 }, allow_blank: true
   validates :language, length: { is: 2 }, allow_blank: true
   validates :language, format: { with: /\A[a-z]+\z/ }, allow_blank: true
 
