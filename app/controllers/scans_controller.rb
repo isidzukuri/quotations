@@ -11,11 +11,9 @@ class ScansController < ApplicationController
   end
 
   def create
-    @scan = Scan.new(scans_params)
+    result = Scans::Create.new(scan_params).call
 
-    if @scan.save
-      Scans::Ocr.new.call(@scan)
-
+    if result.success?
       flash[:success] = I18n.t('scan.created_successfully')
       redirect_to scans_path
     else
@@ -42,7 +40,7 @@ class ScansController < ApplicationController
 
   private
 
-  def scans_params
-    params.require(:scan).permit(:image)
+  def scan_params
+    params.require(:scan).permit(:image, :do_not_scan)
   end
 end

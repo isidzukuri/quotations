@@ -39,8 +39,9 @@ RSpec.describe ScansController, type: :controller do
     let(:file_path) { Rails.root.join('spec', 'fixtures', 'quote.jpeg') }
     let(:image) { Rack::Test::UploadedFile.new file_path, 'image/jpeg' }
     let(:text) { "\"If it still in your mind,\nit is worth\ntaking the risk.\"\n" }
+    let(:do_not_scan) { false }
     let(:params) do
-      { scan: { image: image } }
+      { scan: { image: image, do_not_scan: do_not_scan } }
     end
 
     before do
@@ -54,7 +55,11 @@ RSpec.describe ScansController, type: :controller do
     end
 
     it { expect { subject }.to change { Scan.count }.by(1) }
-    it { subject; expect(assigns(:scan).status).to eq('scanned') }
-    it { subject; expect(assigns(:scan).text).to eq(text) }
+    it 'calls service object' do
+      expect(Scans::Create).to receive(:new).and_call_original
+      expect_any_instance_of(Scans::Create).to receive(:call).and_call_original
+
+      subject
+    end
   end
 end

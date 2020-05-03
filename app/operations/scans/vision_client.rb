@@ -7,10 +7,13 @@ module Scans
     SERVICE = 'TEXT_DETECTION'
     HEADERS = { 'Content-Type' => 'application/json' }.freeze
 
-    def call(image_base64)
+    def initialize(image_base64)
       @image_base64 = image_base64
       # @image_base64 = Base64.strict_encode64(File.open(Rails.root+"spec/fixtures/quote.jpeg").read)
-      response = request
+    end
+
+    def call
+      response = scanning_request
 
       data = JSON.parse(response.body)
 
@@ -32,14 +35,14 @@ module Scans
       "https://vision.googleapis.com/v1/images:annotate?key=#{Rails.application.credentials.google_vision_api_key}"
     end
 
-    def request
+    def scanning_request
       uri = URI.parse(request_url)
 
-      http = Net::HTTP.new(uri.host, uri.port)
-      http.use_ssl = true
       request = Net::HTTP::Post.new(uri.request_uri, HEADERS)
       request.body = request_params.to_json
 
+      http = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = true
       http.request(request)
     end
 

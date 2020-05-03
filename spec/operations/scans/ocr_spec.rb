@@ -16,7 +16,7 @@ RSpec.describe Scans::Ocr do
 
     subject do
       VCR.use_cassette(vcr_cassette) do
-        described_class.new.call(scan)
+        described_class.new(scan).call
       end
     end
 
