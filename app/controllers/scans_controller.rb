@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class ScansController < ApplicationController
+  
   def index
-    @scans = Scan.all
-    # TODO: add paginator
+    @items = Scan.all.paginate(page: params[:page], per_page: 3)
   end
 
   def new

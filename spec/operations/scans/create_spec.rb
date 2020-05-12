@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe Scans::Create do
-
   describe 'POST #create' do
     let(:api_key) { 'google_vision_api_key' }
     let(:request_url) { "https://vision.googleapis.com/v1/images:annotate?key=#{api_key}" }
@@ -31,7 +30,7 @@ RSpec.describe Scans::Create do
     it { expect(subject[:scan].text).to eq(text) }
 
     context 'do not scan' do
-      let(:do_not_scan){ true }
+      let(:do_not_scan) { true }
 
       it { expect(subject[:scan].status).to eq('initialized') }
       it { expect(subject[:scan].text).to eq(nil) }
