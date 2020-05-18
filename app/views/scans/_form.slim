@@ -1,0 +1,10 @@
+= form_for @scan, html: { multipart: true } do |f|
+  .form-group
+    label=t('scan.image')
+    = f.file_field :image, class: 'form-control-file'
+    
+  .form-check
+    = f.check_box :do_not_scan, class: 'form-check-input'
+    label.form-check-label=t('scan.do_not_scan')
+
+  = f.submit class: "btn btn-primary", value: t('submit')

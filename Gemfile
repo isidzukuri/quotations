@@ -50,14 +50,19 @@ group :test do
   gem 'factory_bot'
   gem 'ffaker'
   gem 'vcr'
+  gem 'rails-controller-testing'
   gem 'rspec-rails'
   gem 'selenium-webdriver'
   gem 'webdrivers'
+  gem 'webmock'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
+gem 'carrierwave', '~> 2.0'
 gem 'devise'
 gem 'devise-bootstrap-views', '~> 1.0'
 gem 'slim-rails'
+gem 'will_paginate', '~> 3.1.0'
+gem 'will_paginate-bootstrap4'

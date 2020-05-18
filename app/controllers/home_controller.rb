@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class HomeController < ApplicationController
   def index
-    flash[:error] = 'achtung!!!'
+    # flash[:notice] = 'achtung!!!'
   end
 end
