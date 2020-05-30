@@ -20,7 +20,7 @@ module Scans
       @scan = Scan.new(scan_params)
       result[:scan] = scan
 
-      result.errors!(@scan.errors.full_message) unless scan.save
+      result.errors!(@scan.errors.messages) unless scan.save
     end
 
     def ocr

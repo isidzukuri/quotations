@@ -40,3 +40,11 @@ en:
     deleted_successfully: 'Scan has been deleted'
     do_not_scan: 'Do not scan'
     image: 'Image'
+  quotation:
+    created_successfully: 'Quotation has been created'
+    deleted_successfully: 'Quotation has been deleted'
+    text: 'Text'
+    language: 'Language'
+    page: 'Page'
+    percent: 'Percent'
+    url: 'Link to page'

@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Scans::Create do
-  describe 'POST #create' do
+  describe '#call' do
     let(:api_key) { 'google_vision_api_key' }
     let(:request_url) { "https://vision.googleapis.com/v1/images:annotate?key=#{api_key}" }
     let(:vcr_cassette) { :google_vision_success }

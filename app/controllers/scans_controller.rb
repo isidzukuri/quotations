@@ -3,7 +3,7 @@
 class ScansController < ApplicationController
   
   def index
-    @items = Scan.all.paginate(page: params[:page], per_page: 3)
+    @items = Scan.all.paginate(page: params[:page], per_page: 20)
   end
 
   def new

@@ -1,0 +1,33 @@
+= form_for @quotation, html: { multipart: true } do |f|
+
+  .form-group
+    label=t('quotation.text')
+    = f.text_area :text, class: 'form-control', rows: 5
+
+  .form-group
+    label=t('quotation.language')
+    = f.text_field :language, class: 'form-control'
+    
+  .form-group
+    label=t('quotation.page')
+    = f.text_field :page, class: 'form-control'
+
+  .form-group
+    label=t('quotation.percent')
+    = f.text_field :percent, class: 'form-control'
+    
+  .form-group
+    label=t('quotation.url')
+    = f.text_field :url, class: 'form-control'
+        
+  = f.fields_for :scan do |scan|
+
+   .form-group
+    label=t('scan.image')
+    = scan.file_field :image, class: 'form-control-file'
+    
+   .form-check
+    = scan.check_box :do_not_scan, class: 'form-check-input'
+    label.form-check-label=t('scan.do_not_scan')
+
+  = f.submit class: "btn btn-primary", value: t('submit')

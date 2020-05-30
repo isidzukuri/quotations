@@ -72,3 +72,5 @@ export
 
 
 rails g controller Quotations --template-engine=slim --no-helper --no-assets --test-framework=rspec
+
+validate emty qoutations creation

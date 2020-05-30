@@ -1,0 +1,9 @@
+<h2>Quotations index</h2>
+
+- @items.each do |quote|
+  div 
+    = link_to quote.id, quote
+    p
+      = quote.text
+      
+= render partial: 'layouts/paginator'
