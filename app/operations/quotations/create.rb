@@ -11,9 +11,14 @@ module Quotations
     end
 
     def call
-      validate_empty_quotation
-      create_scan
+      result[:quotation] = Quotation.new(params)
 
+      validate_empty_quotation
+
+      return result unless result.success?
+
+      create_scan
+      
       return result unless result.success?
 
       create_quotation
@@ -25,7 +30,7 @@ module Quotations
     attr_reader :params, :scan_params, :result
 
     def create_scan
-      return unless scan_params.present?
+      return unless scan_params&.dig(:image).present?
 
       scan_result = Scans::Create.new(scan_params).call
 
@@ -33,15 +38,12 @@ module Quotations
     end
 
     def create_quotation
-      quotation = Quotation.new(params)
-      result[:quotation] = quotation
-
-      result.errors!(quotation.errors.messages) unless quotation.save
+      result.errors!(result[:quotation].errors.messages) unless result[:quotation].save
     end
 
     def validate_empty_quotation
       unless scan_params&.dig(:image) || VALUABLE_ATTRIBUTES.any? { |attribute| params[attribute].present? }
-        result.errors!({ quotation: ['is empty'] })
+        result.errors!({ quotation: [I18n.t('quotation.is_empty')] })
       end
     end
   end

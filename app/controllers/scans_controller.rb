@@ -17,7 +17,7 @@ class ScansController < ApplicationController
       flash[:success] = I18n.t('scan.created_successfully')
       redirect_to scans_path
     else
-      flash[:danger] = I18n.t(:smtng_went_wrong)
+      flash[:error] = I18n.t(:smtng_went_wrong)
       render :new
     end
   end
@@ -33,7 +33,7 @@ class ScansController < ApplicationController
       flash[:success] = I18n.t('scan.deleted_successfully')
       redirect_to scans_path
     else
-      flash[:danger] = I18n.t(:smtng_went_wrong)
+      flash[:error] = I18n.t(:smtng_went_wrong)
       render :show
     end
   end

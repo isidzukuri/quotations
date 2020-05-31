@@ -11,15 +11,13 @@ class QuotationsController < ApplicationController
 
   def create
     result = Quotations::Create.new(quotation_params).call
-    ap quotation_params
-    raise
 
     if result.success?
       flash[:success] = I18n.t('quotation.created_successfully')
-      redirect_to scans_path
+      redirect_to quotations_path
     else
-      flash[:danger] = I18n.t(:smtng_went_wrong)
-      # add errors to the flash
+      flash[:error] = HashToFlash.new(result.errors).call
+      @quotation = result[:quotation]
       render :new
     end
   end

@@ -59,15 +59,6 @@ RSpec.describe Quotations::Create do
         it { expect { subject }.to change { Quotation.count }.by(1) }
         it { expect { subject }.to change { Scan.count }.by(1) }
       end
-
-      context 'not valid scan params' do
-        let(:scan_params) { { language: 'aaa' } }
-
-        it { expect(subject.success?).to be_falsey }
-        it { expect(subject.errors).to eq({ language: ['is the wrong length (should be 2 characters)'] }) }
-        it { expect { subject }.not_to change { Quotation.count } }
-        it { expect { subject }.not_to change { Scan.count } }
-      end
     end
   end
 end

@@ -48,3 +48,4 @@ en:
     page: 'Page'
     percent: 'Percent'
     url: 'Link to page'
+    is_empty: 'is empty'
