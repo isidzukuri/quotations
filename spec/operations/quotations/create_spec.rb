@@ -13,10 +13,12 @@ RSpec.describe Quotations::Create do
         percent: 1,
         url: 'http://127.0.0.1:3000/some_url',
         text: 'lorem ipsum',
-        scan: scan_params
+        scan: scan_params,
+        authors: authors_params
       }
     end
     let(:scan_params) { nil }
+    let(:authors_params) { nil }
 
     context 'without scan' do
       context 'valid params' do
@@ -43,6 +45,45 @@ RSpec.describe Quotations::Create do
 
           it { expect(subject.success?).to be_falsey }
           it { expect(subject.errors).to eq({ quotation: ['is empty'] }) }
+        end
+      end
+
+      context 'with authors' do
+        let!(:author){ create(:author) }
+
+        context 'with id' do
+          let(:authors_params) { [{id: author.id}] }
+        
+          it { expect { subject }.not_to change { Author.count } }
+          it { expect(subject[:quotation].authors).to eq([author]) }
+        end
+
+        context 'without id' do
+          let(:authors_params) { [{full_name: 'some name'}] }
+        
+          it { expect { subject }.to change { Author.count }.by(1) }
+          it { expect(subject[:quotation].authors.first.full_name).to eq(authors_params[0][:full_name]) }
+        
+          context 'author with given name exists' do
+            let(:authors_params) { [{full_name: author.full_name}] }
+             
+            it { expect { subject }.not_to change { Author.count } }
+            it { expect(subject[:quotation].authors).to eq([author]) }
+          end
+        end
+
+        context 'invalid author' do
+          let(:authors_params) { [{full_name: 's'}] }
+        
+          it { expect { subject }.not_to change { Author.count } }
+          it { expect(subject[:quotation].authors).to eq([]) }
+        end
+
+        context 'few authors' do
+          let(:authors_params) { [{id: author.id}, {full_name: 'some name'}] }
+
+          it { expect { subject }.to change { Author.count }.by(1) }
+          it { expect(subject[:quotation].authors.length).to eq(2) }
         end
       end
     end

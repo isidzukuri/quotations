@@ -3,7 +3,7 @@
 class Quotation < ApplicationRecord
   belongs_to :user, optional: true
   has_one :scan
-  has_many :authors
+  has_and_belongs_to_many :authors
   # belongs_to :book
 
   validates :percent, inclusion: 1..100, allow_blank: true

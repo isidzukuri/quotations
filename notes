@@ -74,3 +74,15 @@ export
 rails g controller Quotations --template-engine=slim --no-helper --no-assets --test-framework=rspec
 
 validate emty qoutations creation
+
+--------------------------------
+
+if book added take authors from it (js)
+after authors can be edit for this specific quotes and it will not change authors of the Book
+How to edit Author?
+
+--------------------------------
+
+if book name field is populated create book.
+Authors of book is taken from quotation authors
+How to edit Book?

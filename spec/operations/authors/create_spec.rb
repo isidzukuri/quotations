@@ -16,6 +16,14 @@ RSpec.describe Authors::Create do
       it { expect(subject.success?).to be_truthy }
       it { expect { subject }.to change { Author.count }.by(1) }
       it { expect(subject[:author].full_name).to eq(params[:full_name]) }
+
+      context 'author with given name exists' do
+        let!(:author){ create(:author) }
+        let(:params) { {full_name: author.full_name} }
+         
+        it { expect { subject }.not_to change { Author.count } }
+        it { expect(subject[:author]).to eq(author) }
+      end
     end
 
     context 'not valid params' do

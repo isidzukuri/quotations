@@ -28,9 +28,9 @@ ActiveRecord::Schema.define(version: 2020_06_20_194453) do
 
   create_table "authors_quotations", force: :cascade do |t|
     t.integer "author_id", null: false
-    t.integer "authors_quotation_id", null: false
-    t.index "\"quotation_id\"", name: "index_authors_quotations_on_quotation_id"
+    t.integer "quotation_id", null: false
     t.index ["author_id"], name: "index_authors_quotations_on_author_id"
+    t.index ["quotation_id"], name: "index_authors_quotations_on_quotation_id"
   end
 
   create_table "credentials", force: :cascade do |t|

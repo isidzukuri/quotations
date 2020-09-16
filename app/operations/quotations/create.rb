@@ -6,6 +6,7 @@ module Quotations
 
     def initialize(params)
       @scan_params = params.delete(:scan)
+      @authors_params = params.delete(:authors)
       @params = params
       @result = ExecutionResult.new
     end
@@ -22,12 +23,14 @@ module Quotations
       return result unless result.success?
 
       create_quotation
+      # add_book
+      add_authors
       result
     end
 
     private
 
-    attr_reader :params, :scan_params, :result
+    attr_reader :params, :scan_params, :authors_params, :result
 
     def create_scan
       return unless scan_params&.dig(:image).present?
@@ -45,6 +48,24 @@ module Quotations
       unless scan_params&.dig(:image) || VALUABLE_ATTRIBUTES.any? { |attribute| params[attribute].present? }
         result.errors!({ quotation: [I18n.t('quotation.is_empty')] })
       end
+    end
+
+    def add_authors
+      return unless authors_params.present? 
+
+      # take_athors_from_book
+
+      author_ids = []
+      authors_params.each do |author_params|
+        if author_params[:id]
+          author_ids << author_params[:id]
+        else
+          author_result = Authors::Create.new(author_params).call
+          author_ids << author_result[:author].id if author_result.success?
+        end
+      end
+
+      result[:quotation].author_ids = author_ids
     end
   end
 end

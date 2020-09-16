@@ -43,6 +43,7 @@ class QuotationsController < ApplicationController
   def quotation_params
     params.require(:quotation).permit(:language, :page, :percent, :url, :text, scan: [:image, :do_not_scan] )
 
+    # , authors: [[:id, :full_name]]
     # params.require(:scan).permit(:image, :do_not_scan)
   end
 end
