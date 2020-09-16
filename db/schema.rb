@@ -10,7 +10,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_03_063523) do
+ActiveRecord::Schema.define(version: 2020_06_20_194453) do
+
+  create_table "authors", force: :cascade do |t|
+    t.string "full_name", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["full_name"], name: "index_authors_on_full_name"
+  end
+
+  create_table "authors_books", force: :cascade do |t|
+    t.integer "author_id", null: false
+    t.integer "book_id", null: false
+    t.index "\"quotation_id\"", name: "index_authors_books_on_quotation_id"
+    t.index ["book_id"], name: "index_authors_books_on_book_id"
+  end
+
+  create_table "authors_quotations", force: :cascade do |t|
+    t.integer "author_id", null: false
+    t.integer "authors_quotation_id", null: false
+    t.index "\"quotation_id\"", name: "index_authors_quotations_on_quotation_id"
+    t.index ["author_id"], name: "index_authors_quotations_on_author_id"
+  end
 
   create_table "credentials", force: :cascade do |t|
     t.string "email", default: "", null: false
