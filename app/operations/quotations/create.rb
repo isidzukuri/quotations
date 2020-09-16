@@ -50,22 +50,18 @@ module Quotations
       end
     end
 
+    def add_book
+      # Books::Create.new(params, authors_params).call
+    end
+
     def add_authors
       return unless authors_params.present? 
 
       # take_athors_from_book
 
-      author_ids = []
-      authors_params.each do |author_params|
-        if author_params[:id]
-          author_ids << author_params[:id]
-        else
-          author_result = Authors::Create.new(author_params).call
-          author_ids << author_result[:author].id if author_result.success?
-        end
-      end
+      authors_result = Authors::CreateCollection.new(authors_params).call
 
-      result[:quotation].author_ids = author_ids
+      result[:quotation].author_ids = authors_result[:author_ids]
     end
   end
 end
