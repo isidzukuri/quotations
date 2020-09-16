@@ -15,7 +15,7 @@ module Books
 
       return result unless result.success?
 
-      result[:book].author_ids = author_ids 
+      result[:book].author_ids = author_ids
 
       result
     end
@@ -34,11 +34,11 @@ module Books
       books_with_same_title = Book.where(title: params[:title])
 
       books_with_same_title.each do |book|
-        if (author_ids - book.author_ids).empty?
-          result[:book] = book
+        next unless (author_ids - book.author_ids).empty?
 
-          return true
-        end
+        result[:book] = book
+
+        return true
       end
 
       false

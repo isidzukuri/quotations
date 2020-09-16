@@ -23,7 +23,9 @@ module Authors
     attr_reader :params, :result
 
     def create_author
-      result.errors!(result[:author].errors.messages) unless result[:author].save
+      unless result[:author].save
+        result.errors!(result[:author].errors.messages)
+      end
     end
   end
 end

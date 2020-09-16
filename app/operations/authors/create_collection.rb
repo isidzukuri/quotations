@@ -14,7 +14,9 @@ module Authors
           result[:author_ids] << author_params[:id]
         else
           author_result = Authors::Create.new(author_params).call
-          result[:author_ids] << author_result[:author].id if author_result.success?
+          if author_result.success?
+            result[:author_ids] << author_result[:author].id
+          end
         end
       end
 

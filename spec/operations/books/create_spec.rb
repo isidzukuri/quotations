@@ -8,7 +8,7 @@ RSpec.describe Books::Create do
 
     let(:params) do
       {
-        title: 'lorem ipsum',
+        title: 'lorem ipsum'
       }
     end
     let(:authors_params) { nil }
@@ -19,20 +19,19 @@ RSpec.describe Books::Create do
       it { expect(subject[:book].title).to eq(params[:title]) }
 
       context 'book exists' do
-        let!(:book){ create :book }
-        let(:params){{title: book.title}}
+        let!(:book) { create :book }
+        let(:params) { { title: book.title } }
 
         it { expect { subject }.not_to change { Book.count } }
         it { expect(subject[:book]).to eq(book) }
-      
-        context 'books authors present' do
-          let!(:book){ create :book, :with_author }
-          let(:params){{title: book.title}}
-      
-          it { expect { subject }.not_to change { Book.count } }
-          it { expect(subject[:book]).to eq(book) }    
-        end
 
+        context 'books authors present' do
+          let!(:book) { create :book, :with_author }
+          let(:params) { { title: book.title } }
+
+          it { expect { subject }.not_to change { Book.count } }
+          it { expect(subject[:book]).to eq(book) }
+        end
       end
     end
 
@@ -67,16 +66,16 @@ RSpec.describe Books::Create do
       end
 
       context 'book without author exists' do
-        let!(:book){ create :book }
-        let(:params){{title: book.title}}
+        let!(:book) { create :book }
+        let(:params) { { title: book.title } }
         let(:authors_params) { [{ full_name: author.full_name }] }
 
         it { expect { subject }.to change { Book.count }.by(1) }
       end
 
       context 'book with author exists' do
-        let!(:book){ create :book, authors: [author] }
-        let(:params){{title: book.title}}
+        let!(:book) { create :book, authors: [author] }
+        let(:params) { { title: book.title } }
         let(:authors_params) { [{ full_name: author.full_name }] }
 
         it { expect { subject }.not_to change { Book.count } }

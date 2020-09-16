@@ -18,9 +18,9 @@ RSpec.describe Authors::Create do
       it { expect(subject[:author].full_name).to eq(params[:full_name]) }
 
       context 'author with given name exists' do
-        let!(:author){ create(:author) }
-        let(:params) { {full_name: author.full_name} }
-         
+        let!(:author) { create(:author) }
+        let(:params) { { full_name: author.full_name } }
+
         it { expect { subject }.not_to change { Author.count } }
         it { expect(subject[:author]).to eq(author) }
       end

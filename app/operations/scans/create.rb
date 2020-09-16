@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Scans
   class Create
     def initialize(scan_params)
@@ -6,7 +7,7 @@ module Scans
       @result = ExecutionResult.new
     end
 
-    def call  
+    def call
       create_scan
       ocr
       result

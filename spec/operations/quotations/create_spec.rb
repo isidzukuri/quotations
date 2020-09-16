@@ -14,10 +14,12 @@ RSpec.describe Quotations::Create do
         url: 'http://127.0.0.1:3000/some_url',
         text: 'lorem ipsum',
         scan: scan_params,
+        book: book_params,
         authors: authors_params
       }
     end
     let(:scan_params) { nil }
+    let(:book_params) { nil }
     let(:authors_params) { nil }
 
     context 'without scan' do
@@ -48,39 +50,53 @@ RSpec.describe Quotations::Create do
         end
       end
 
+      context 'with book' do
+        context 'book not present' do
+          let(:book_params) { { title: 'some title' } }
+
+          it { expect { subject }.to change { Book.count }.by(1) }
+          it { expect(subject[:quotation].book).to be_a(Book) }
+          it 'creates book if not present' do
+            expect_any_instance_of(Books::Create).to receive(:call).and_call_original
+
+            subject
+          end
+        end
+      end
+
       context 'with authors' do
-        let!(:author){ create(:author) }
+        let!(:author) { create(:author) }
 
         context 'with id' do
-          let(:authors_params) { [{id: author.id}] }
-        
+          let(:authors_params) { [{ id: author.id }] }
+
           it { expect { subject }.not_to change { Author.count } }
           it { expect(subject[:quotation].authors).to eq([author]) }
         end
 
         context 'without id' do
-          let(:authors_params) { [{full_name: 'some name'}] }
-        
+          let(:authors_params) { [{ full_name: 'some name' }] }
+
           it { expect { subject }.to change { Author.count }.by(1) }
           it { expect(subject[:quotation].authors.first.full_name).to eq(authors_params[0][:full_name]) }
-        
+
           context 'author with given name exists' do
-            let(:authors_params) { [{full_name: author.full_name}] }
-             
+            let(:authors_params) { [{ full_name: author.full_name }] }
+
             it { expect { subject }.not_to change { Author.count } }
             it { expect(subject[:quotation].authors).to eq([author]) }
           end
         end
 
         context 'invalid author' do
-          let(:authors_params) { [{full_name: 's'}] }
-        
+          let(:authors_params) { [{ full_name: 's' }] }
+
           it { expect { subject }.not_to change { Author.count } }
           it { expect(subject[:quotation].authors).to eq([]) }
         end
 
         context 'few authors' do
-          let(:authors_params) { [{id: author.id}, {full_name: 'some name'}] }
+          let(:authors_params) { [{ id: author.id }, { full_name: 'some name' }] }
 
           it { expect { subject }.to change { Author.count }.by(1) }
           it { expect(subject[:quotation].authors.length).to eq(2) }

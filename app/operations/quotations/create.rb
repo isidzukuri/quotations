@@ -6,6 +6,7 @@ module Quotations
 
     def initialize(params)
       @scan_params = params.delete(:scan)
+      @book_params = params.delete(:book)
       @authors_params = params.delete(:authors)
       @params = params
       @result = ExecutionResult.new
@@ -19,18 +20,18 @@ module Quotations
       return result unless result.success?
 
       create_scan
-      
+
       return result unless result.success?
 
       create_quotation
-      # add_book
+      add_book
       add_authors
       result
     end
 
     private
 
-    attr_reader :params, :scan_params, :authors_params, :result
+    attr_reader :params, :scan_params, :authors_params, :book_params, :result
 
     def create_scan
       return unless scan_params&.dig(:image).present?
@@ -41,7 +42,9 @@ module Quotations
     end
 
     def create_quotation
-      result.errors!(result[:quotation].errors.messages) unless result[:quotation].save
+      unless result[:quotation].save
+        result.errors!(result[:quotation].errors.messages)
+      end
     end
 
     def validate_empty_quotation
@@ -51,13 +54,14 @@ module Quotations
     end
 
     def add_book
-      # Books::Create.new(params, authors_params).call
+      return unless book_params.present?
+
+      book_result = Books::Create.new(book_params, authors_params).call
+      result[:quotation].book = book_result[:book] if book_result.success?
     end
 
     def add_authors
-      return unless authors_params.present? 
-
-      # take_athors_from_book
+      return unless authors_params.present?
 
       authors_result = Authors::CreateCollection.new(authors_params).call
 
