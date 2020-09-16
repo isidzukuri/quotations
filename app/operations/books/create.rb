@@ -9,7 +9,7 @@ module Books
     end
 
     def call
-      return result if book_exists?
+      return result if find_book
 
       create_book
 
@@ -30,7 +30,7 @@ module Books
       @author_ids ||= Authors::CreateCollection.new(authors_params).call[:author_ids]
     end
 
-    def book_exists?
+    def find_book
       books_with_same_title = Book.where(title: params[:title])
 
       books_with_same_title.each do |book|
@@ -38,10 +38,10 @@ module Books
 
         result[:book] = book
 
-        return true
+        return book
       end
 
-      false
+      nil
     end
 
     def create_book
