@@ -2,7 +2,7 @@
 
   .form-group
     label=t('quotation.text')
-    = f.text_area :text, class: 'form-control', rows: 5
+    = f.text_area :text, class: 'form-control', rows: 5, required: true
 
   .form-group
     label=t('quotation.language')
@@ -29,5 +29,19 @@
    .form-check
     = scan.check_box :do_not_scan, class: 'form-check-input'
     label.form-check-label=t('scan.do_not_scan')
+  br
+  div
+    = f.fields_for :authors, @quotation.authors do |author|
+      h5 Authors
+
+    - @quotation.authors.each do |author|
+      .form-group
+        label=t('authors.full_name')
+        = text_field_tag :id, author.id, name: "quotation[authors][][id]"
+        = text_field_tag :full_name, author.full_name, name: "quotation[authors][][full_name]", class: 'form-control'
+
+    button.btn.btn-outline-info type="button" onclick="copyInputGroup(this)" =t('authors.add_another')
 
   = f.submit class: "btn btn-primary", value: t('submit')
+
+

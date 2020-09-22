@@ -24,6 +24,9 @@ module Quotations
       return result unless result.success?
 
       create_quotation
+
+      return result unless result.success?
+      
       add_book
       add_authors
       result

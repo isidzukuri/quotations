@@ -6,10 +6,11 @@ class QuotationsController < ApplicationController
   end
 
   def new
-    @quotation = Quotation.new
+    @quotation = Quotation.new(authors: [Author.new])
   end
 
   def create
+    # ap quotation_params
     result = Quotations::Create.new(quotation_params).call
 
     if result.success?
@@ -41,7 +42,7 @@ class QuotationsController < ApplicationController
   # private
 
   def quotation_params
-    params.require(:quotation).permit(:language, :page, :percent, :url, :text, scan: [:image, :do_not_scan] )
+    params.require(:quotation).permit(:language, :page, :percent, :url, :text, scan: [:image, :do_not_scan], authors: [[:id, :full_name]] )
     # , authors: [[:id, :full_name]]
     # , book: [:id, :title]
   end

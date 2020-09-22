@@ -10,7 +10,7 @@ module Authors
     def call
       result[:author_ids] = []
       authors_params.each do |author_params|
-        if author_params[:id]
+        if author_params[:id].present?
           result[:author_ids] << author_params[:id]
         else
           author_result = Authors::Create.new(author_params).call
