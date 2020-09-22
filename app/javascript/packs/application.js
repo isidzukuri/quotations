@@ -20,3 +20,6 @@ import '../stylesheets/application'
 
 import './bootstrap_custom.js'
 // import 'bootstrap'
+
+import './domain.js'
+
